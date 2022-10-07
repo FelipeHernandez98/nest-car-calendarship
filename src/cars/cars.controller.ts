@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Patch, Delete } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Patch, Delete, ParseUUIDPipe } from '@nestjs/common';
 import { CarsService } from './cars.service';
 
 @Controller('cars')
@@ -14,8 +14,8 @@ export class CarsController {
     }
 
     @Get(':id')
-    getCarById( @Param('id') id: string  ){
-        return this.carService.findById( id ); // El + id se hace para convertir a numero
+    getCarById( @Param('id', ParseUUIDPipe ) id: string  ){
+        return this.carService.findById( id ); 
     }
 
     @Post()
