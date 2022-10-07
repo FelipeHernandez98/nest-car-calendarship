@@ -23,7 +23,7 @@ export class CarsController {
     @Post()
     //@UsePipes( ValidationPipe ) ------> Se puede utilizar el validator Pipe a nivel de metodo
     createCar(@Body() createCarDto: CreateCarDto){
-        return createCarDto;
+        return this.carService.create( createCarDto );
     }
 
     @Patch('id')

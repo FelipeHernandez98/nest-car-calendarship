@@ -7,4 +7,5 @@ export class CreateCarDto {
 
     @IsString({ message: 'El model debe ser un String' })
     readonly model: string;
+
 }
