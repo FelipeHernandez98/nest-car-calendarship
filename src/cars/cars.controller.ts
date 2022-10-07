@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Patch, Delete, ParseUUIDPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Patch, Delete, ParseUUIDPipe, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CarsService } from './cars.service';
 import { CreateCarDto } from './dto/create-car.dto';
 
 @Controller('cars')
+//@UsePipes( ValidationPipe ) -----> Se puede usar el validator Pipe a nivel de Clase
 export class CarsController {
 
     constructor(
@@ -20,6 +21,7 @@ export class CarsController {
     }
 
     @Post()
+    @UsePipes( ValidationPipe ) //------> Se puede utilizar el validator Pipe a nivel de metodo
     createCar(@Body() createCarDto: CreateCarDto){
         return createCarDto;
     }
