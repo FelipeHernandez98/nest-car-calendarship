@@ -1,6 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { v4 as uuid } from 'uuid'
 import { CreateCarDto } from './dto/create-car.dto';
+import { UpdateCarDto } from './dto/update-car.dto';
 import { Car } from './interfaces/car.interface';
 
 @Injectable()
@@ -48,5 +49,31 @@ export class CarsService {
         this.cars.push(car);
 
         return car;
+    }
+
+    update( id: string, updateCarDto: UpdateCarDto ){
+
+        let carDB = this.findById(id);
+
+        if( updateCarDto.uuid && updateCarDto.uuid !== id){ // Para validar que el id no lo envien en el body y no se sobreescriba
+            throw new BadRequestException('El id del carro no puede enviarse por el body')
+        }
+
+        this.cars = this.cars.map( car => {
+
+            if(car.id === id){
+                carDB= {
+                    ...carDB, // Exparse lo que trae el carDB
+                    ...updateCarDto, // Exparse lo que trae el updateCarDto y lo sobreescribe
+                    id // Sobreescribe el id para asegurarse que no venga en el body
+                }
+                return carDB;
+            }
+
+            return car;
+
+        })
+
+        return carDB;
     }
 }

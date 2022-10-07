@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Post, Patch, Delete, ParseUUIDPipe, /* UsePipes, ValidationPipe */ } from '@nestjs/common';
 import { CarsService } from './cars.service';
 import { CreateCarDto } from './dto/create-car.dto';
+import { UpdateCarDto } from './dto/update-car.dto';
 
 @Controller('cars')
 //@UsePipes( ValidationPipe ) -----> Se puede usar el validator Pipe a nivel de Clase
@@ -27,8 +28,11 @@ export class CarsController {
     }
 
     @Patch('id')
-    updateCar( @Param('id', ParseIntPipe) id: number, @Body() body: any ){
-        return body;
+    updateCar( 
+        @Param('id', ParseUUIDPipe) id: string, 
+        @Body() updateCarDto: UpdateCarDto )
+    {
+        return this.carService.update(id, updateCarDto);
     }
 
     @Delete()
@@ -37,5 +41,6 @@ export class CarsController {
             msg: `El carro con id ${ id } se elimino con exito!`
         }
     }
+    
 }
 
