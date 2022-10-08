@@ -8,11 +8,11 @@ import { Brand } from './entities/brand.entity';
 export class BrandsService {
 
   private brands: Brand[] = [
-    {
+    /* {
       id: uuid(),
       name: 'Toyota',
       createAt: new Date().getTime()
-    }
+    } */
   ]
 
   create(createBrandDto: CreateBrandDto) {
@@ -62,4 +62,9 @@ export class BrandsService {
   remove(id: string) {
     this.brands = this.brands.filter( brand => brand.id !== id);
   }
+
+  fillBrandsWithSeedData( brands: Brand[] ){
+    this.brands = brands;
+  }
+  
 }
